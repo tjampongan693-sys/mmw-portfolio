@@ -1,0 +1,4070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Portfolio | MMW</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --sky-top: #4bb8f5;
+        --sky-mid: #79d5f7;
+        --sky-bottom: #bceeff;
+
+        --white: #ffffff;
+        --black: #111111;
+
+        --red: #e83232;
+        --red-dark: #a91f27;
+        --red-light: #ff5959;
+
+        --yellow: #ffd83d;
+        --yellow-light: #fff4a8;
+        --yellow-dark: #bd8c00;
+
+        --green: #55b83f;
+        --green-dark: #367f2e;
+
+        --brown: #925126;
+        --brown-dark: #633318;
+
+        --blue-dark: #217fb0;
+        --blue-light: #dff7ff;
+    }
+
+    body {
+        font-family: 'VT323', monospace;
+        background: var(--sky-top);
+        color: var(--black);
+        overflow-x: hidden;
+    }
+
+    button {
+        font-family: 'Press Start 2P', cursive;
+        cursor: pointer;
+    }
+
+
+    /* =========================
+       GENERAL SCREEN
+    ========================= */
+
+    .screen {
+        min-height: 100vh;
+        width: 100%;
+        display: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .screen.active {
+        display: flex;
+    }
+
+
+    /* =========================
+       START SCREEN
+    ========================= */
+
+    #startScreen {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top) 0%,
+                var(--sky-mid) 58%,
+                var(--sky-bottom) 100%
+            );
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: 30px;
+    }
+
+
+    /* =========================
+       CLOUDS
+    ========================= */
+
+    .cloud {
+        position: absolute;
+        background: var(--white);
+
+        width: 100px;
+        height: 35px;
+
+        border-radius: 30px;
+
+        box-shadow:
+            25px -15px 0 var(--white),
+            55px 0 0 var(--white),
+            30px 15px 0 var(--white);
+
+        opacity: 0.92;
+    }
+
+    .cloud1 {
+        top: 10%;
+        left: 7%;
+    }
+
+    .cloud2 {
+        top: 18%;
+        right: 8%;
+        transform: scale(0.8);
+    }
+
+    .cloud3 {
+        top: 42%;
+        left: 3%;
+        transform: scale(0.6);
+    }
+
+
+    /* =========================
+       BLOCKS
+    ========================= */
+
+    .block {
+        position: absolute;
+
+        width: 55px;
+        height: 55px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #f0a442,
+                #d27c25
+            );
+
+        border: 5px solid #8d4e1d;
+
+        box-shadow:
+            inset 0 0 0 4px #f5bd5d,
+            4px 4px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .block1 {
+        top: 15%;
+        left: 25%;
+    }
+
+    .block2 {
+        top: 28%;
+        right: 22%;
+    }
+
+    .question-block {
+        background:
+            linear-gradient(
+                135deg,
+                #ffe15a,
+                #f1bd22
+            );
+
+        border-color: #9c7010;
+    }
+
+    .question-block::after {
+        content: "?";
+
+        color: white;
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 25px;
+
+        position: absolute;
+
+        top: 10px;
+        left: 13px;
+
+        text-shadow: 2px 2px 0 #9c7010;
+    }
+
+
+    /* =========================
+       COINS
+    ========================= */
+
+    .coin {
+        position: absolute;
+
+        width: 25px;
+        height: 35px;
+
+        background:
+            linear-gradient(
+                to right,
+                #f6c72f,
+                #ffe66d,
+                #f6c72f
+            );
+
+        border: 4px solid var(--yellow-dark);
+
+        border-radius: 50%;
+
+        box-shadow:
+            inset 0 0 0 3px #fff0a0,
+            3px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .coin1 {
+        top: 24%;
+        left: 16%;
+    }
+
+    .coin2 {
+        top: 35%;
+        right: 12%;
+    }
+
+    .coin3 {
+        top: 12%;
+        right: 35%;
+    }
+
+
+    /* =========================
+       STARS
+    ========================= */
+
+    .star {
+        position: absolute;
+
+        font-size: 45px;
+
+        color: var(--yellow);
+
+        text-shadow:
+            4px 4px 0 #9c7010,
+            0 0 10px rgba(255, 216, 61, 0.45);
+    }
+
+    .star1 {
+        top: 8%;
+        right: 30%;
+    }
+
+    .star2 {
+        bottom: 20%;
+        left: 12%;
+    }
+
+
+    /* =========================
+       START CONTENT
+    ========================= */
+
+    .start-content {
+        z-index: 10;
+
+        text-align: center;
+
+        max-width: 1000px;
+    }
+
+    .small-title {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 18px;
+
+        margin-bottom: 25px;
+
+        color: white;
+
+        text-shadow:
+            4px 4px 0 #222,
+            0 0 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-title {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: clamp(35px, 7vw, 80px);
+
+        color: white;
+
+        text-shadow:
+            7px 7px 0 #222,
+            10px 10px 0 var(--red-dark);
+
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: clamp(15px, 2vw, 25px);
+
+        color: white;
+
+        text-shadow:
+            4px 4px 0 #222;
+
+        margin-bottom: 35px;
+    }
+
+
+    /* =========================
+       PLAYER CARD
+    ========================= */
+
+    .player-card {
+        display: inline-block;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #ffffff,
+                #eefaff
+            );
+
+        border: 6px solid var(--black);
+
+        padding: 20px 30px;
+
+        box-shadow:
+            10px 10px 0 var(--black),
+            inset 0 0 0 3px #d7f4ff;
+
+        margin-bottom: 35px;
+    }
+
+    .player-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 16px;
+
+        margin-bottom: 12px;
+    }
+
+    .player-course {
+        font-size: 22px;
+    }
+
+    .player-project {
+        font-size: 20px;
+
+        margin-top: 5px;
+    }
+
+
+    /* =========================
+       MAIN BUTTON
+    ========================= */
+
+    .start-button {
+        background:
+            linear-gradient(
+                to bottom,
+                var(--red-light),
+                var(--red)
+            );
+
+        color: white;
+
+        border: 6px solid var(--black);
+
+        padding: 20px 30px;
+
+        font-size: 15px;
+
+        box-shadow:
+            8px 8px 0 var(--black);
+
+        transition: 0.15s;
+    }
+
+    .start-button:hover {
+        transform: translate(4px, 4px);
+
+        box-shadow:
+            4px 4px 0 var(--black);
+    }
+
+    .start-button:active {
+        transform: translate(8px, 8px);
+
+        box-shadow: none;
+    }
+
+
+    /* =========================
+       GROUND
+    ========================= */
+
+    .ground {
+        position: absolute;
+
+        bottom: 0;
+
+        width: 100%;
+
+        height: 90px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--green) 0px,
+                var(--green) 25px,
+                var(--brown) 25px,
+                var(--brown) 100%
+            );
+
+        border-top: 7px solid var(--black);
+    }
+
+    .grass-pattern {
+        position: absolute;
+
+        top: 0;
+
+        width: 100%;
+        height: 25px;
+
+        background:
+            repeating-linear-gradient(
+                90deg,
+                #69bd45 0px,
+                #69bd45 25px,
+                #4c9632 25px,
+                #4c9632 32px
+            );
+    }
+
+
+    /* =========================
+       WORLD SCREEN
+    ========================= */
+
+    #worldScreen {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-mid) 55%,
+                var(--sky-bottom)
+            );
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 70px 30px 100px;
+    }
+
+    .world-header {
+        font-family: 'Press Start 2P', cursive;
+
+        color: white;
+
+        font-size: clamp(30px, 5vw, 55px);
+
+        text-shadow:
+            6px 6px 0 #222,
+            0 0 10px rgba(0, 0, 0, 0.12);
+
+        margin-bottom: 60px;
+
+        text-align: center;
+    }
+
+
+    /* =========================
+       WORLD CARDS
+    ========================= */
+
+    .world-container {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 35px;
+
+        max-width: 1200px;
+
+        width: 100%;
+
+        z-index: 5;
+    }
+
+    .world-card {
+        min-height: 300px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #ffffff,
+                #eefaff
+            );
+
+        border: 7px solid var(--black);
+
+        box-shadow:
+            12px 12px 0 var(--black);
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        padding: 25px;
+
+        text-align: center;
+
+        transition: 0.15s;
+
+        position: relative;
+
+        overflow: hidden;
+    }
+
+    .world-card::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 8px;
+
+        background:
+            linear-gradient(
+                90deg,
+                var(--red),
+                var(--yellow),
+                var(--green)
+            );
+    }
+
+    .world-card:hover {
+        transform: translateY(-8px);
+
+        box-shadow:
+            12px 20px 0 var(--black);
+    }
+
+    .world-number {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 20px;
+
+        margin-bottom: 30px;
+
+        color: var(--red);
+    }
+
+    .world-title {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 20px;
+
+        line-height: 1.7;
+    }
+
+    .world-icon {
+        font-size: 60px;
+
+        margin-bottom: 25px;
+
+        filter:
+            drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.15));
+    }
+
+
+    /* =========================
+       WORLD 1
+    ========================= */
+
+    #complexity {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 50px 25px;
+    }
+
+    .world1-header {
+        text-align: center;
+
+        z-index: 5;
+    }
+
+    .world1-header h1 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: white;
+
+        font-size: clamp(25px, 5vw, 50px);
+
+        text-shadow:
+            6px 6px 0 #222;
+
+        margin-bottom: 15px;
+    }
+
+    .world1-header h2 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: #111;
+
+        font-size: clamp(13px, 2vw, 20px);
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #eefaff
+            );
+
+        padding: 15px 20px;
+
+        border: 5px solid #111;
+
+        box-shadow:
+            7px 7px 0 #111;
+
+        display: inline-block;
+    }
+
+
+    /* =========================
+       LEVEL MENU
+    ========================= */
+
+    .subsection-menu {
+        width: 100%;
+
+        max-width: 1000px;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+
+        margin-top: 60px;
+
+        z-index: 5;
+    }
+
+    .subsection-button {
+        background:
+            linear-gradient(
+                to bottom,
+                #ffffff,
+                #eefaff
+            );
+
+        border: 6px solid #111;
+
+        box-shadow:
+            9px 9px 0 #111;
+
+        min-height: 150px;
+
+        padding: 25px;
+
+        transition: 0.15s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .subsection-button:hover {
+        transform: translateY(-7px);
+
+        box-shadow:
+            9px 16px 0 #111;
+
+        background: var(--yellow-light);
+    }
+
+    .subsection-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+    }
+
+    .subsection-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       SUBSECTION PAGES
+    ========================= */
+
+    .subsection-page {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 45px 25px 80px;
+
+        position: relative;
+    }
+
+    .subsection-page.active {
+        display: flex;
+    }
+
+    .subsection-page-header {
+        text-align: center;
+
+        margin-bottom: 35px;
+
+        max-width: 1100px;
+    }
+
+    .subsection-page-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+    .subsection-page-title {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: clamp(18px, 3vw, 32px);
+
+        color: white;
+
+        text-shadow:
+            5px 5px 0 #222;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       ANSWER BOX
+    ========================= */
+
+    .answer-box {
+        width: 100%;
+
+        max-width: 1000px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #ffffff,
+                #f4fcff
+            );
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        padding: 35px 40px;
+
+        font-family: 'VT323', monospace;
+
+        font-size: 24px;
+
+        line-height: 1.5;
+
+        text-align: justify;
+    }
+
+    .answer-box p {
+        margin-bottom: 22px;
+    }
+
+    .answer-box p:last-child {
+        margin-bottom: 0;
+    }
+
+
+    /* =========================
+       PICTURE
+    ========================= */
+
+    .picture-placeholder {
+        width: 100%;
+
+        max-width: 800px;
+
+        min-height: 350px;
+
+        background: white;
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 18px;
+
+        text-align: center;
+
+        padding: 30px;
+    }
+
+    .picture-placeholder img {
+        max-width: 100%;
+
+        height: auto;
+
+        display: block;
+    }
+
+
+    /* =========================
+       BACK BUTTON
+    ========================= */
+
+    .back-button {
+        margin-top: 40px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--red-light),
+                var(--red)
+            );
+
+        color: white;
+
+        border: 5px solid #111;
+
+        padding: 15px 22px;
+
+        font-size: 12px;
+
+        box-shadow:
+            7px 7px 0 #111;
+
+        transition: 0.15s;
+    }
+
+    .back-button:hover {
+        transform: translate(3px, 3px);
+
+        box-shadow:
+            4px 4px 0 #111;
+    }
+
+
+    /* =========================
+       HOME BUTTON
+    ========================= */
+
+    .home-button {
+        margin-top: 40px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #ffe96a,
+                #f3bd20
+            );
+
+        color: #111;
+
+        border: 5px solid #111;
+
+        padding: 15px 22px;
+
+        font-size: 12px;
+
+        box-shadow:
+            7px 7px 0 #111;
+
+        transition: 0.15s;
+    }
+
+    .home-button:hover {
+        transform: translate(3px, 3px);
+
+        box-shadow:
+            4px 4px 0 #111;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #fff18c,
+                #ffd23f
+            );
+    }
+
+    .home-button:active {
+        transform: translate(7px, 7px);
+
+        box-shadow: none;
+    }
+
+
+    /* =========================
+       DECORATIONS
+    ========================= */
+
+    .world-cloud {
+        position: absolute;
+
+        background: white;
+
+        width: 100px;
+        height: 35px;
+
+        border-radius: 30px;
+
+        box-shadow:
+            25px -15px 0 white,
+            55px 0 0 white,
+            30px 15px 0 white;
+
+        opacity: 0.9;
+    }
+
+    .wc1 {
+        top: 12%;
+        left: 5%;
+    }
+
+    .wc2 {
+        top: 28%;
+        right: 7%;
+        transform: scale(0.8);
+    }
+
+    .wc3 {
+        top: 65%;
+        left: 8%;
+        transform: scale(0.6);
+    }
+
+    .pipe {
+        position: absolute;
+
+        width: 70px;
+        height: 100px;
+
+        background: #3dbd3d;
+
+        border: 6px solid #111;
+
+        bottom: 70px;
+
+        right: 8%;
+    }
+
+    .pipe-top {
+        position: absolute;
+
+        width: 90px;
+        height: 30px;
+
+        background: #48d348;
+
+        border: 6px solid #111;
+
+        left: -16px;
+
+        top: -25px;
+    }
+
+
+    /* =========================
+       COMING SOON
+    ========================= */
+
+    .coming-soon {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        display: none;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+
+        padding: 30px;
+    }
+
+    .coming-soon.active {
+        display: flex;
+    }
+
+    .coming-soon h1 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: white;
+
+        font-size: clamp(25px, 5vw, 50px);
+
+        text-shadow:
+            6px 6px 0 #222;
+
+        margin-bottom: 30px;
+    }
+
+    .coming-soon p {
+        font-family: 'Press Start 2P', cursive;
+
+        background: white;
+
+        border: 6px solid #111;
+
+        padding: 25px;
+
+        box-shadow:
+            8px 8px 0 #111;
+
+        font-size: 14px;
+    }
+
+
+    /* =========================
+       WORLD 2
+    ========================= */
+
+    #perfectImperfections {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 50px 25px 80px;
+
+        position: relative;
+    }
+
+    .world2-header {
+        text-align: center;
+
+        z-index: 5;
+    }
+
+    .world2-header h1 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: white;
+
+        font-size: clamp(25px, 5vw, 50px);
+
+        text-shadow:
+            6px 6px 0 #222;
+
+        margin-bottom: 15px;
+    }
+
+    .world2-header h2 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: #111;
+
+        font-size: clamp(13px, 2vw, 20px);
+
+        background: white;
+
+        padding: 15px 20px;
+
+        border: 5px solid #111;
+
+        box-shadow:
+            7px 7px 0 #111;
+
+        display: inline-block;
+    }
+
+    .world2-menu {
+        width: 100%;
+
+        max-width: 1000px;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+
+        margin-top: 60px;
+
+        z-index: 5;
+    }
+
+    .world2-button {
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #eefaff
+            );
+
+        border: 6px solid #111;
+
+        box-shadow:
+            9px 9px 0 #111;
+
+        min-height: 150px;
+
+        padding: 25px;
+
+        transition: 0.15s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .world2-button:hover {
+        transform: translateY(-7px);
+
+        box-shadow:
+            9px 16px 0 #111;
+
+        background: var(--yellow-light);
+    }
+
+    .world2-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+    }
+
+    .world2-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       WORLD 2 TOPICS
+    ========================= */
+
+    .topic-menu,
+    .level2-topic-menu {
+        width: 100%;
+
+        max-width: 1000px;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 25px;
+
+        margin-top: 25px;
+    }
+
+    .topic-button,
+    .level2-topic-button {
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #eefaff
+            );
+
+        border: 6px solid #111;
+
+        box-shadow:
+            9px 9px 0 #111;
+
+        min-height: 140px;
+
+        padding: 25px;
+
+        transition: 0.15s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .topic-button:hover,
+    .level2-topic-button:hover {
+        transform: translateY(-7px);
+
+        box-shadow:
+            9px 16px 0 #111;
+
+        background: var(--yellow-light);
+    }
+
+    .topic-number,
+    .level2-topic-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 13px;
+
+        margin-bottom: 18px;
+    }
+
+    .topic-name,
+    .level2-topic-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 17px;
+    }
+
+
+    /* =========================
+       TOPIC PAGES
+    ========================= */
+
+    .topic-page {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 45px 25px 80px;
+
+        position: relative;
+    }
+
+    .topic-page.active {
+        display: flex;
+    }
+
+    .topic-page-header {
+        text-align: center;
+
+        margin-bottom: 35px;
+
+        max-width: 1100px;
+    }
+
+    .topic-page-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+    .topic-page-title {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: clamp(18px, 3vw, 32px);
+
+        color: white;
+
+        text-shadow:
+            5px 5px 0 #222;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       WORLD 3
+    ========================= */
+
+    #chaotic {
+        min-height: 100vh;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--sky-top),
+                var(--sky-bottom)
+            );
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 50px 25px 80px;
+
+        position: relative;
+    }
+
+    .world3-header {
+        text-align: center;
+
+        z-index: 5;
+    }
+
+    .world3-header h1 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: white;
+
+        font-size: clamp(25px, 5vw, 50px);
+
+        text-shadow:
+            6px 6px 0 #222;
+
+        margin-bottom: 15px;
+    }
+
+    .world3-header h2 {
+        font-family: 'Press Start 2P', cursive;
+
+        color: #111;
+
+        font-size: clamp(13px, 2vw, 20px);
+
+        background: white;
+
+        padding: 15px 20px;
+
+        border: 5px solid #111;
+
+        box-shadow:
+            7px 7px 0 #111;
+
+        display: inline-block;
+    }
+
+
+    /* =========================
+       WORLD 3 PROBLEM
+    ========================= */
+
+    .world3-problem {
+        width: 100%;
+
+        max-width: 1000px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #f4fcff
+            );
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        padding: 30px 35px;
+
+        margin-top: 35px;
+
+        z-index: 5;
+
+        font-family: 'VT323', monospace;
+
+        font-size: 24px;
+
+        line-height: 1.5;
+    }
+
+    .world3-problem-title {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 15px;
+
+        margin-bottom: 20px;
+
+        text-align: center;
+    }
+
+    .world3-problem p {
+        margin-bottom: 15px;
+    }
+
+    .world3-problem p:last-child {
+        margin-bottom: 0;
+    }
+
+
+    /* =========================
+       WORLD 3 TRIAL MENU
+    ========================= */
+
+    .world3-trial-menu {
+        width: 100%;
+
+        max-width: 1000px;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 25px;
+
+        margin-top: 45px;
+
+        z-index: 5;
+    }
+
+    .world3-trial-button {
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #eefaff
+            );
+
+        border: 6px solid #111;
+
+        box-shadow:
+            9px 9px 0 #111;
+
+        min-height: 150px;
+
+        padding: 25px;
+
+        transition: 0.15s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .world3-trial-button:hover {
+        transform: translateY(-7px);
+
+        box-shadow:
+            9px 16px 0 #111;
+
+        background: var(--yellow-light);
+    }
+
+    .world3-trial-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+    }
+
+    .world3-trial-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       WORLD 3 DISCUSSION
+    ========================= */
+
+    .world3-discussion-button {
+        width: 100%;
+
+        max-width: 1000px;
+
+        margin-top: 30px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #eefaff
+            );
+
+        border: 6px solid #111;
+
+        box-shadow:
+            9px 9px 0 #111;
+
+        min-height: 120px;
+
+        padding: 25px;
+
+        transition: 0.15s;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+
+        z-index: 5;
+    }
+
+    .world3-discussion-button:hover {
+        transform: translateY(-7px);
+
+        box-shadow:
+            9px 16px 0 #111;
+
+        background: var(--yellow-light);
+    }
+
+    .world3-discussion-number {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+    }
+
+    .world3-discussion-name {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       TRIAL TABLE
+    ========================= */
+
+    .trial-table-wrapper {
+        width: 100%;
+
+        max-width: 1000px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #f4fcff
+            );
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        padding: 25px;
+
+        overflow-x: auto;
+    }
+
+    .trial-table {
+        width: 100%;
+
+        min-width: 850px;
+
+        border-collapse: collapse;
+
+        font-family: 'VT323', monospace;
+
+        font-size: 22px;
+
+        text-align: center;
+    }
+
+    .trial-table th,
+    .trial-table td {
+        border: 4px solid #111;
+
+        padding: 12px 10px;
+
+        height: 50px;
+    }
+
+    .trial-table th {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 11px;
+
+        background: var(--yellow-light);
+    }
+
+    .trial-table .category {
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 11px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                var(--red-light),
+                var(--red)
+            );
+
+        color: white;
+
+        min-width: 170px;
+    }
+
+    .trial-table .choice {
+        font-family: 'VT323', monospace;
+
+        font-size: 22px;
+
+        text-align: left;
+
+        padding-left: 15px;
+    }
+
+    .trial-table .house-cell {
+        min-width: 115px;
+
+        background: white;
+    }
+
+    .trial-table .empty-cell {
+        background: #ffffff;
+    }
+
+    .trial-table tr:hover td {
+        background: var(--yellow-light);
+    }
+
+
+    /* =========================
+       TRIAL ANSWER
+    ========================= */
+
+    .trial-answer {
+        width: 100%;
+
+        max-width: 1000px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #f4fcff
+            );
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        padding: 25px 30px;
+
+        margin-top: 35px;
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+
+        text-align: center;
+    }
+
+    .trial-answer span {
+        color: var(--red);
+    }
+
+
+    /* =========================
+       DISCUSSION PAGE
+    ========================= */
+
+    .discussion-box {
+        width: 100%;
+
+        max-width: 1000px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                white,
+                #f4fcff
+            );
+
+        border: 7px solid #111;
+
+        box-shadow:
+            12px 12px 0 #111;
+
+        padding: 35px 40px;
+
+        font-family: 'VT323', monospace;
+
+        font-size: 24px;
+
+        line-height: 1.5;
+
+        text-align: justify;
+    }
+
+    .discussion-box p {
+        margin-bottom: 22px;
+    }
+
+    .discussion-box p:last-child {
+        margin-bottom: 0;
+    }
+
+    .discussion-box strong {
+        font-family: 'Press Start 2P', cursive;
+
+        color: var(--red);
+
+        font-size: 18px;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+        .world-container {
+            grid-template-columns: 1fr;
+
+            max-width: 500px;
+        }
+
+        .subsection-menu {
+            grid-template-columns: 1fr;
+
+            max-width: 600px;
+        }
+
+        .world2-menu {
+            grid-template-columns: 1fr;
+
+            max-width: 600px;
+        }
+
+        .topic-menu {
+            grid-template-columns: 1fr;
+
+            max-width: 600px;
+        }
+
+        .level2-topic-menu {
+            grid-template-columns: 1fr;
+
+            max-width: 600px;
+        }
+
+        .world3-trial-menu {
+            grid-template-columns: 1fr;
+
+            max-width: 600px;
+        }
+
+        .world3-discussion-button {
+            max-width: 600px;
+        }
+
+        .answer-box {
+            padding: 25px;
+
+            font-size: 21px;
+        }
+
+        .discussion-box {
+            padding: 25px;
+
+            font-size: 21px;
+        }
+
+        .world3-problem {
+            padding: 25px;
+
+            font-size: 21px;
+        }
+
+        .trial-table-wrapper {
+            padding: 20px;
+        }
+
+        .trial-table {
+            font-size: 21px;
+        }
+
+        .trial-answer {
+            font-size: 13px;
+
+            padding: 22px;
+        }
+    }
+
+
+    @media (max-width: 600px) {
+
+        #startScreen,
+        #worldScreen,
+        #complexity,
+        #perfectImperfections,
+        #chaotic {
+            padding-left: 18px;
+
+            padding-right: 18px;
+        }
+
+        .player-card {
+            padding: 18px;
+        }
+
+        .player-name {
+            font-size: 12px;
+        }
+
+        .player-course,
+        .player-project {
+            font-size: 18px;
+        }
+
+        .start-button {
+            font-size: 11px;
+
+            padding: 17px;
+        }
+
+        .subsection-button,
+        .world2-button {
+            min-height: 130px;
+        }
+
+        .answer-box {
+            font-size: 20px;
+
+            padding: 22px;
+
+            text-align: left;
+        }
+
+        .discussion-box {
+            font-size: 20px;
+
+            padding: 22px;
+
+            text-align: left;
+        }
+
+        .discussion-box strong {
+            font-size: 14px;
+        }
+
+        .subsection-page-title,
+        .topic-page-title {
+            font-size: 16px;
+        }
+
+        .topic-button {
+            min-height: 120px;
+        }
+
+        .level2-topic-button {
+            min-height: 120px;
+        }
+
+        .world3-problem {
+            font-size: 20px;
+
+            padding: 22px;
+
+            text-align: left;
+        }
+
+        .world3-problem-title {
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+        .world3-trial-button {
+            min-height: 120px;
+        }
+
+        .world3-discussion-button {
+            min-height: 120px;
+        }
+
+        .world3-discussion-number {
+            font-size: 12px;
+        }
+
+        .world3-discussion-name {
+            font-size: 13px;
+        }
+
+        .trial-table-wrapper {
+            padding: 15px;
+        }
+
+        .trial-table {
+            min-width: 850px;
+
+            font-size: 20px;
+        }
+
+        .trial-table th {
+            font-size: 10px;
+        }
+
+        .trial-table .category {
+            font-size: 10px;
+        }
+
+        .trial-answer {
+            font-size: 11px;
+
+            padding: 20px;
+        }
+
+        .home-button,
+        .back-button {
+            width: 100%;
+
+            max-width: 330px;
+        }
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     START SCREEN
+========================================== -->
+
+<section id="startScreen" class="screen active">
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <div class="block block1"></div>
+    <div class="block block2 question-block"></div>
+
+    <div class="coin coin1"></div>
+    <div class="coin coin2"></div>
+    <div class="coin coin3"></div>
+
+    <div class="star star1">★</div>
+    <div class="star star2">★</div>
+
+
+    <div class="start-content">
+
+        <div class="small-title">
+            MATHEMATICS IN THE MODERN WORLD
+        </div>
+
+        <h1 class="main-title">
+            THE PORTFOLIO
+        </h1>
+
+        <div class="subtitle">
+            MY WORLD
+        </div>
+
+        <div class="player-card">
+
+            <div class="player-name">
+                Pearl Nathalie M. Razado
+            </div>
+
+            <div class="player-course">
+                BS in Information Technology - 1B
+            </div>
+
+            <div class="player-project">
+                Project in MMW
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="start-button" onclick="startPortfolio()">
+            ▶ START: MMW PORTFOLIO
+        </button>
+
+    </div>
+
+
+    <div class="ground">
+
+        <div class="grass-pattern"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     WORLD SELECTION
+========================================== -->
+
+<section id="worldScreen" class="screen">
+
+    <div class="world-cloud wc1"></div>
+    <div class="world-cloud wc2"></div>
+    <div class="world-cloud wc3"></div>
+
+
+    <h1 class="world-header">
+        MY WORLD
+    </h1>
+
+
+    <div class="world-container">
+
+        <div class="world-card" onclick="openSection('complexity')">
+
+            <div class="world-icon">
+                🌿
+            </div>
+
+            <div class="world-number">
+                WORLD 1
+            </div>
+
+            <div class="world-title">
+                THE CALM OF<br>
+                COMPLEXITY
+            </div>
+
+        </div>
+
+
+        <div class="world-card" onclick="openSection('perfectImperfections')">
+
+            <div class="world-icon">
+                🌀
+            </div>
+
+            <div class="world-number">
+                WORLD 2
+            </div>
+
+            <div class="world-title">
+                PERFECT<br>
+                IMPERFECTIONS
+            </div>
+
+        </div>
+
+
+        <div class="world-card" onclick="openSection('chaotic')">
+
+            <div class="world-icon">
+                ⚡
+            </div>
+
+            <div class="world-number">
+                WORLD 3
+            </div>
+
+            <div class="world-title">
+                CHAOTIC<br>
+                ORDER
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NEW HOME BUTTON -->
+
+    <button class="home-button" onclick="goToTitle()">
+        ◀ RETURN TO HOME
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 1
+========================================== -->
+
+<section id="complexity" class="screen">
+
+    <div class="world-cloud wc1"></div>
+    <div class="world-cloud wc2"></div>
+    <div class="world-cloud wc3"></div>
+
+
+    <div class="world1-header">
+
+        <h1>
+            THE CALM OF COMPLEXITY
+        </h1>
+
+        <h2>
+            MATHEMATICS IN NATURE
+        </h2>
+
+    </div>
+
+
+    <div class="subsection-menu">
+
+        <button class="subsection-button" onclick="openSubsection('sub1')">
+
+            <div class="subsection-number">
+                LEVEL 1
+            </div>
+
+            <div class="subsection-name">
+                THE DISCOVERY
+            </div>
+
+        </button>
+
+
+        <button class="subsection-button" onclick="openSubsection('sub2')">
+
+            <div class="subsection-number">
+                LEVEL 2
+            </div>
+
+            <div class="subsection-name">
+                THE PICTURE
+            </div>
+
+        </button>
+
+
+        <button class="subsection-button" onclick="openSubsection('sub3')">
+
+            <div class="subsection-number">
+                LEVEL 3
+            </div>
+
+            <div class="subsection-name">
+                THE PATTERN
+            </div>
+
+        </button>
+
+
+        <button class="subsection-button" onclick="openSubsection('sub4')">
+
+            <div class="subsection-number">
+                LEVEL 4
+            </div>
+
+            <div class="subsection-name">
+                THE CONNECTION
+            </div>
+
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="goToWorlds()">
+        ◀ BACK TO WORLDS
+    </button>
+
+</section>
+
+
+<!-- WORLD 1 LEVEL 1 -->
+
+<section id="sub1" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 1 • LEVEL 1
+        </div>
+
+        <h1 class="subsection-page-title">
+            WHAT ARE THE THINGS I LEARNED FROM THIS PARTICULAR TOPIC?
+        </h1>
+
+    </div>
+
+
+    <div class="answer-box">
+
+        <p>
+            I learned that mathematics is not just about numbers, formulas, and solving equations. Mathematics is more than that because it can be found almost everywhere around us, especially in nature. Before learning about this topic, I mostly thought of math as something that we only use in the classroom when solving problems. However, I realized that mathematics is also present in the natural world through patterns, shapes, measurements, and arrangements.
+        </p>
+
+        <p>
+            For example, we can see mathematical patterns in flowers, leaves, seashells, trees, and even in the way some animals are arranged or shaped. The spiral patterns of some flowers and shells show how numbers and patterns can occur naturally. We can also observe symmetry in leaves, butterflies, flowers, and other living things. These examples helped me understand that nature follows certain patterns and that mathematics can help us describe and understand them.
+        </p>
+
+        <p>
+            I also learned that mathematics is connected to our everyday lives. We can see it in objects, buildings, designs, technology, and even in the way things are organized. This made me realize that mathematics is not just about memorizing formulas or getting the correct answer. It is also a way of understanding the world around us.
+        </p>
+
+        <p>
+            Overall, this topic helped me appreciate mathematics more because I learned to look at ordinary things in a different way. I now understand that mathematics is already a part of nature and our daily lives, even when we do not immediately notice it. It showed me that math is truly everywhere, and learning about it can help us understand the beauty, patterns, and order that exist in the world around us.
+        </p>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld1()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 1 LEVEL 2 -->
+
+<section id="sub2" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 1 • LEVEL 2
+        </div>
+
+        <h1 class="subsection-page-title">
+            WHAT IS IN MY PICTURE?
+        </h1>
+
+    </div>
+
+
+    <div class="answer-box">
+
+        <p>
+            I took a picture of the famous Mayon Volcano, which is known for its almost symmetrical cone-shaped form. For me, Mayon Volcano is one of the perfect examples of mathematics in nature because its shape shows symmetry and geometric form. The volcano has a similar slope on both sides, creating a balanced and almost mirror-like appearance. This shows how mathematical concepts such as symmetry, shapes, angles, and proportions can be observed in nature. Even though Mayon Volcano was naturally formed, its structure shows patterns that we can understand using mathematics. This made me realize that mathematics is not only found in numbers and equations but can also be seen in the natural landscapes around us.
+        </p>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld1()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 1 LEVEL 3 -->
+
+<section id="sub3" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 1 • LEVEL 3
+        </div>
+
+        <h1 class="subsection-page-title">
+            WHAT IS THE ROLE OF MATHEMATICS IN MY PICTURE?
+        </h1>
+
+    </div>
+
+
+    <div class="answer-box">
+
+        <p>
+            Mathematics plays an important role in my picture of Mayon Volcano because it helps explain the shape and structure of the volcano. Mayon is known for its nearly symmetrical cone shape, where both sides have similar slopes that create a balanced appearance. This shows the mathematical concept of symmetry, as well as geometric ideas such as shapes, angles, proportions, and measurements. Mathematics allows us to describe and understand the natural form of Mayon Volcano instead of seeing it only as a beautiful landscape. Through this picture, I realized that mathematical patterns can naturally occur in the environment. It shows that mathematics is not only used for solving equations but can also help us understand the shapes, patterns, and structures that we see in nature.
+        </p>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld1()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 1 LEVEL 4 -->
+
+<section id="sub4" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 1 • LEVEL 4
+        </div>
+
+        <h1 class="subsection-page-title">
+            WHAT IS THE SIGNIFICANCE OF THIS PICTURE IN MY LIFE?
+        </h1>
+
+    </div>
+
+
+    <div class="answer-box">
+
+        <p>
+            This picture is significant to me because Mayon Volcano has always been a beautiful part of the Bicol Region, but growing up in Camarines Sur, I rarely had the chance to see it in person. Even though Albay is not very far from Camarines Sur, my family and I rarely traveled there, so seeing the beauty and almost perfect shape of Mayon was always a special experience for me. However, things changed when I started pursuing my bachelor's degree here in Albay. I now have the opportunity to see Mayon Volcano more often, sometimes even during ordinary days while going to school or traveling around the province.
+        </p>
+
+        <p>
+            This picture is meaningful to me because it represents a change in my life. What used to be a rare and special sight has now become a beautiful part of my everyday college experience. It also reminds me to appreciate the places around me and the opportunities I have now. Beyond its beauty, Mayon makes me appreciate how nature can create something so remarkable and mathematically symmetrical. For me, this picture is not only a photograph of a volcano but also a reminder of my journey from Camarines Sur to Albay and the new experiences I have gained as a college student.
+        </p>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld1()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 2
+========================================== -->
+
+<section id="perfectImperfections" class="screen">
+
+    <div class="world-cloud wc1"></div>
+    <div class="world-cloud wc2"></div>
+    <div class="world-cloud wc3"></div>
+
+
+    <div class="world2-header">
+
+        <h1>
+            PERFECT IMPERFECTIONS
+        </h1>
+
+        <h2>
+            MATHEMATICAL SYMBOLS AND DEFINITIONS
+        </h2>
+
+    </div>
+
+
+    <div class="world2-menu">
+
+        <button class="world2-button" onclick="openWorld2Level('world2Level1')">
+
+            <div class="world2-number">
+                LEVEL 1
+            </div>
+
+            <div class="world2-name">
+                THE LANGUAGE OF MATH
+            </div>
+
+        </button>
+
+
+        <button class="world2-button" onclick="openWorld2Level('world2Level2')">
+
+            <div class="world2-number">
+                LEVEL 2
+            </div>
+
+            <div class="world2-name">
+                DEFINITION IN OTHER FIELDS
+            </div>
+
+        </button>
+
+
+        <button class="world2-button" onclick="openWorld2Level('world2Level3')">
+
+            <div class="world2-number">
+                LEVEL 3
+            </div>
+
+            <div class="world2-name">
+                COMMONALITIES AND DIFFERENCES
+            </div>
+
+        </button>
+
+
+        <button class="world2-button" onclick="openWorld2Level('world2Level4')">
+
+            <div class="world2-number">
+                LEVEL 4
+            </div>
+
+            <div class="world2-name">
+                IMPLICATIONS OF COMMONALITIES AND DIFFERENCES ON ITS USE IN OUR DAILY LIVES
+            </div>
+
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="goToWorlds()">
+        ◀ BACK TO WORLDS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 1 -->
+
+<section id="world2Level1" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 2 • LEVEL 1
+        </div>
+
+        <h1 class="subsection-page-title">
+            MATHEMATICAL SYMBOL AND/OR DEFINITION
+        </h1>
+
+    </div>
+
+
+    <div class="topic-menu">
+
+        <button class="topic-button" onclick="openTopic('rootTopic')">
+            <div class="topic-number">TOPIC 1</div>
+            <div class="topic-name">ROOT</div>
+        </button>
+
+        <button class="topic-button" onclick="openTopic('powerTopic')">
+            <div class="topic-number">TOPIC 2</div>
+            <div class="topic-name">POWER</div>
+        </button>
+
+        <button class="topic-button" onclick="openTopic('meanTopic')">
+            <div class="topic-number">TOPIC 3</div>
+            <div class="topic-name">MEAN</div>
+        </button>
+
+        <button class="topic-button" onclick="openTopic('volumeTopic')">
+            <div class="topic-number">TOPIC 4</div>
+            <div class="topic-name">VOLUME</div>
+        </button>
+
+        <button class="topic-button" onclick="openTopic('functionTopic')">
+            <div class="topic-number">TOPIC 5</div>
+            <div class="topic-name">FUNCTION</div>
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld2()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 2 -->
+
+<section id="world2Level2" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 2 • LEVEL 2
+        </div>
+
+        <h1 class="subsection-page-title">
+            DEFINITION IN OTHER FIELDS
+        </h1>
+
+    </div>
+
+
+    <div class="level2-topic-menu">
+
+        <button class="level2-topic-button" onclick="openLevel2Topic('rootOtherTopic')">
+            <div class="level2-topic-number">TOPIC 1</div>
+            <div class="level2-topic-name">ROOT</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel2Topic('powerOtherTopic')">
+            <div class="level2-topic-number">TOPIC 2</div>
+            <div class="level2-topic-name">POWER</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel2Topic('meanOtherTopic')">
+            <div class="level2-topic-number">TOPIC 3</div>
+            <div class="level2-topic-name">MEAN</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel2Topic('volumeOtherTopic')">
+            <div class="level2-topic-number">TOPIC 4</div>
+            <div class="level2-topic-name">VOLUME</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel2Topic('functionOtherTopic')">
+            <div class="level2-topic-number">TOPIC 5</div>
+            <div class="level2-topic-name">FUNCTION</div>
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld2()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 3 -->
+
+<section id="world2Level3" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 2 • LEVEL 3
+        </div>
+
+        <h1 class="subsection-page-title">
+            COMMONALITIES AND DIFFERENCES
+        </h1>
+
+    </div>
+
+
+    <div class="level2-topic-menu">
+
+        <button class="level2-topic-button" onclick="openLevel3Topic('rootCommonTopic')">
+            <div class="level2-topic-number">TOPIC 1</div>
+            <div class="level2-topic-name">ROOT</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel3Topic('powerCommonTopic')">
+            <div class="level2-topic-number">TOPIC 2</div>
+            <div class="level2-topic-name">POWER</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel3Topic('meanCommonTopic')">
+            <div class="level2-topic-number">TOPIC 3</div>
+            <div class="level2-topic-name">MEAN</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel3Topic('volumeCommonTopic')">
+            <div class="level2-topic-number">TOPIC 4</div>
+            <div class="level2-topic-name">VOLUME</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel3Topic('functionCommonTopic')">
+            <div class="level2-topic-number">TOPIC 5</div>
+            <div class="level2-topic-name">FUNCTION</div>
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld2()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 4 -->
+
+<section id="world2Level4" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 2 • LEVEL 4
+        </div>
+
+        <h1 class="subsection-page-title">
+            IMPLICATIONS OF COMMONALITIES AND DIFFERENCES ON ITS USE IN OUR DAILY LIVES
+        </h1>
+
+    </div>
+
+
+    <div class="level2-topic-menu">
+
+        <button class="level2-topic-button" onclick="openLevel4Topic('rootImplicationTopic')">
+            <div class="level2-topic-number">TOPIC 1</div>
+            <div class="level2-topic-name">ROOT</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel4Topic('powerImplicationTopic')">
+            <div class="level2-topic-number">TOPIC 2</div>
+            <div class="level2-topic-name">POWER</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel4Topic('meanImplicationTopic')">
+            <div class="level2-topic-number">TOPIC 3</div>
+            <div class="level2-topic-name">MEAN</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel4Topic('volumeImplicationTopic')">
+            <div class="level2-topic-number">TOPIC 4</div>
+            <div class="level2-topic-name">VOLUME</div>
+        </button>
+
+        <button class="level2-topic-button" onclick="openLevel4Topic('functionImplicationTopic')">
+            <div class="level2-topic-number">TOPIC 5</div>
+            <div class="level2-topic-name">FUNCTION</div>
+        </button>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld2()">
+        ◀ BACK TO LEVELS
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 2 TOPIC PAGES
+========================================== -->
+
+<section id="rootCommonTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 3 • TOPIC 1
+        </div>
+
+        <h1 class="topic-page-title">
+            ROOT
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The two meanings are different, but both can be connected to the idea of something important or fundamental. In mathematics, a root helps us find the value that satisfies an equation, while in biology, the root is an important part of a plant that helps it survive and grow.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level3()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="powerCommonTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 3 • TOPIC 2
+        </div>
+
+        <h1 class="topic-page-title">
+            POWER
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            Both meanings are related to the idea of strength or capability, but they describe different things. In mathematics, power tells us how many times a number is multiplied by itself. In physics, power tells us how quickly energy is being used or transferred.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level3()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="meanCommonTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 3 • TOPIC 3
+        </div>
+
+        <h1 class="topic-page-title">
+            MEAN
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The biggest commonality is that the same word is used, but the meanings are very different. In mathematics, mean has a specific process and answer, while in ordinary conversations, it can describe someone's behavior or intention.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level3()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="volumeCommonTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 3 • TOPIC 4
+        </div>
+
+        <h1 class="topic-page-title">
+            VOLUME
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            Both meanings describe an amount or level of something, but they measure different things. Mathematical volume measures the amount of physical space inside or occupied by an object, while sound volume refers to the loudness of a sound.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level3()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="functionCommonTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 3 • TOPIC 5
+        </div>
+
+        <h1 class="topic-page-title">
+            FUNCTION
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The meanings are different, but they have a connection because both involve something producing a particular result. In mathematics, a function follows a specific relationship between an input and an output. In everyday use, a function refers to what something is designed or expected to do.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level3()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 1 TOPICS -->
+
+<section id="rootTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 1 • TOPIC 1
+        </div>
+
+        <h1 class="topic-page-title">
+            ROOT
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In mathematics, a root is a value that makes an equation true. For example, in x² - 9 = 0, the roots are 3 and -3. It can also be written using the radical symbol √, such as √25 = 5.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level1()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="powerTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 1 • TOPIC 2
+        </div>
+
+        <h1 class="topic-page-title">
+            POWER
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In mathematics, power refers to a number being multiplied by itself a certain number of times. It is written using an exponent. For example, 2³ means 2 × 2 × 2 = 8. The small number 3 is called the exponent.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level1()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="meanTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 1 • TOPIC 3
+        </div>
+
+        <h1 class="topic-page-title">
+            MEAN
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In mathematics and statistics, the mean is the average of a set of numbers. To find the mean, we add all the values and divide the total by the number of values. For example, the mean of 5, 10, and 15 is 10.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level1()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="volumeTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 1 • TOPIC 4
+        </div>
+
+        <h1 class="topic-page-title">
+            VOLUME
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In mathematics, volume refers to the amount of space occupied by a three-dimensional object. Different objects have different formulas for finding their volume. For example, the volume of a rectangular prism can be found using V = lwh, and it is measured in cubic units such as cm³ or m³.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level1()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="functionTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 1 • TOPIC 5
+        </div>
+
+        <h1 class="topic-page-title">
+            FUNCTION
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In mathematics, a function is a relationship between an input and an output where each input has exactly one corresponding output. It can be represented using f(x). For example, if f(x) = x + 2, an input of 3 gives an output of 5.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level1()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 2 TOPICS -->
+
+<section id="rootOtherTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 2 • TOPIC 1
+        </div>
+
+        <h1 class="topic-page-title">
+            ROOT
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In biology, a root is the part of a plant that usually grows underground. It helps the plant absorb water and nutrients from the soil and also helps keep the plant in place.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level2()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="powerOtherTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 2 • TOPIC 2
+        </div>
+
+        <h1 class="topic-page-title">
+            POWER
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In physics, power refers to the rate at which work is done or energy is transferred. It is commonly measured in watts (W). We can see this when looking at the power rating of electrical appliances.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level2()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="meanOtherTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 2 • TOPIC 3
+        </div>
+
+        <h1 class="topic-page-title">
+            MEAN
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In everyday language, mean can describe someone who is unkind or unpleasant. It can also mean to intend something, such as when someone says, “I mean what I said.”
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level2()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="volumeOtherTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 2 • TOPIC 4
+        </div>
+
+        <h1 class="topic-page-title">
+            VOLUME
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In music, sound, and technology, volume refers to how loud or soft a sound is. For example, we can increase or decrease the volume when using a phone, television, or speaker.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level2()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="functionOtherTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 2 • TOPIC 5
+        </div>
+
+        <h1 class="topic-page-title">
+            FUNCTION
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            In everyday life and other fields, function usually refers to the purpose or job of something. For example, the function of a computer mouse is to help the user control the pointer on a computer screen.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level2()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<!-- WORLD 2 LEVEL 4 TOPICS -->
+
+<section id="rootImplicationTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 4 • TOPIC 1
+        </div>
+
+        <h1 class="topic-page-title">
+            ROOT
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            Understanding the different meanings of root helps us use the word correctly depending on the situation. In mathematics, a root is used to solve equations, while in biology, a root is part of a plant. In daily life, knowing the context prevents confusion and helps us understand whether we are talking about a mathematical value or something found in nature. It also shows that one word can have different meanings in different fields.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level4()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="powerImplicationTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 4 • TOPIC 2
+        </div>
+
+        <h1 class="topic-page-title">
+            POWER
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The different meanings of power can be useful in everyday decisions. In mathematics, powers help us work with numbers and calculations, while in physics, power helps us understand how quickly energy is used. For example, knowing the power rating of an appliance can help us understand its energy use. This shows that the same word can be connected to different situations, so understanding its meaning is important when applying it in real life.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level4()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="meanImplicationTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 4 • TOPIC 3
+        </div>
+
+        <h1 class="topic-page-title">
+            MEAN
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The word mean can easily cause confusion because its meaning changes depending on the context. In mathematics, the mean is calculated to represent the average of a group of numbers. In everyday conversations, mean can describe behavior or express an intention. Understanding the context helps us avoid misunderstandings, especially when communicating with other people or when reading mathematical problems.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level4()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="volumeImplicationTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 4 • TOPIC 4
+        </div>
+
+        <h1 class="topic-page-title">
+            VOLUME
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            Knowing the different meanings of volume helps us understand what is being measured. Mathematical volume is useful when measuring the space occupied by objects, such as the capacity of a container. Sound volume, on the other hand, helps us control how loud or soft audio is. In daily life, understanding the difference helps us use the word correctly and apply the right idea to situations involving space or sound.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level4()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<section id="functionImplicationTopic" class="topic-page">
+
+    <div class="topic-page-header">
+
+        <div class="topic-page-number">
+            WORLD 2 • LEVEL 4 • TOPIC 5
+        </div>
+
+        <h1 class="topic-page-title">
+            FUNCTION
+        </h1>
+
+    </div>
+
+    <div class="answer-box">
+
+        <p>
+            The idea of function is useful in both mathematics and everyday life because it helps us understand relationships and purposes. In mathematics, a function shows how an input is connected to an output. In daily life, the function of something tells us what it is meant to do. For example, knowing the function of a computer or a device helps us understand how it should be used. This makes the concept useful when studying, solving problems, and understanding technology around us.
+        </p>
+
+    </div>
+
+    <button class="back-button" onclick="backToWorld2Level4()">
+        ◀ BACK TO TOPICS
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 3
+========================================== -->
+
+<section id="chaotic" class="screen">
+
+    <div class="world-cloud wc1"></div>
+    <div class="world-cloud wc2"></div>
+    <div class="world-cloud wc3"></div>
+
+
+    <div class="world3-header">
+
+        <h1>
+            CHAOTIC ORDER
+        </h1>
+
+        <h2>
+            MATHEMATICS IN THE MODERN WORLD
+        </h2>
+
+    </div>
+
+
+    <div class="world3-problem">
+
+        <div class="world3-problem-title">
+            PROBLEM 3
+        </div>
+
+        <p>
+            Facts
+        </p>
+
+        <p>
+            • There are 5 houses in five different colors.
+        </p>
+
+        <p>
+            • In each house lives a person with a different nationality.
+        </p>
+
+        <p>
+            • These five owners drink a certain type of beverage, smoke a certain brand of cigar and keep a certain pet.
+        </p>
+
+        <p>
+            • No owners have the same pet, smoke the same brand of cigar or drink the same beverage.
+        </p>
+
+    </div>
+
+
+    <div class="world3-trial-menu">
+
+        <button class="world3-trial-button" onclick="openWorld3Trial('world3Trial1')">
+
+            <div class="world3-trial-number">
+                TRIAL 1
+            </div>
+
+            <div class="world3-trial-name">
+                OPEN TRIAL
+            </div>
+
+        </button>
+
+
+        <button class="world3-trial-button" onclick="openWorld3Trial('world3Trial2')">
+
+            <div class="world3-trial-number">
+                TRIAL 2
+            </div>
+
+            <div class="world3-trial-name">
+                OPEN TRIAL
+            </div>
+
+        </button>
+
+
+        <button class="world3-trial-button" onclick="openWorld3Trial('world3Trial3')">
+
+            <div class="world3-trial-number">
+                TRIAL 3
+            </div>
+
+            <div class="world3-trial-name">
+                OPEN TRIAL
+            </div>
+
+        </button>
+
+    </div>
+
+
+    <button class="world3-discussion-button" onclick="openWorld3Discussion()">
+
+        <div class="world3-discussion-number">
+            DISCUSSION
+        </div>
+
+        <div class="world3-discussion-name">
+            VIEW DISCUSSION
+        </div>
+
+    </button>
+
+
+    <button class="back-button" onclick="goToWorlds()">
+        ◀ BACK TO WORLDS
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 3 TRIAL 1
+========================================== -->
+
+<section id="world3Trial1" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 3 • TRIAL 1
+        </div>
+
+        <h1 class="subsection-page-title">
+            TRIAL 1
+        </h1>
+
+    </div>
+
+
+    <div class="trial-table-wrapper">
+
+        <table class="trial-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="category">CATEGORY</th>
+
+                    <th class="house-cell">HOUSE 1</th>
+                    <th class="house-cell">HOUSE 2</th>
+                    <th class="house-cell">HOUSE 3</th>
+                    <th class="house-cell">HOUSE 4</th>
+                    <th class="house-cell">HOUSE 5</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+                    <td class="category">NATIONALITY</td>
+                    <td class="choice">Norwegian</td>
+                    <td class="choice">Dane</td>
+                    <td class="choice">Brit</td>
+                    <td class="choice">German</td>
+                    <td class="choice">Swede</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BEVERAGE</td>
+                    <td class="choice">Beer</td>
+                    <td class="choice">Tea</td>
+                    <td class="choice">Milk</td>
+                    <td class="choice">Coffee</td>
+                    <td class="choice">Water</td>
+                </tr>
+
+                <tr>
+                    <td class="category">HOUSE COLOR</td>
+                    <td class="choice">Yellow</td>
+                    <td class="choice">Blue</td>
+                    <td class="choice">Red</td>
+                    <td class="choice">Green</td>
+                    <td class="choice">White</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BRAND OF CIGAR</td>
+                    <td class="choice">Dunhill</td>
+                    <td class="choice">Blends</td>
+                    <td class="choice">Pall Mall</td>
+                    <td class="choice">Blue Master</td>
+                    <td class="choice">Prince</td>
+                </tr>
+
+                <tr>
+                    <td class="category">PET</td>
+                    <td class="choice">Cats</td>
+                    <td class="choice">Horse</td>
+                    <td class="choice">Birds</td>
+                    <td class="choice">Fish</td>
+                    <td class="choice">Dogs</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="trial-answer">
+        THE OWNER OF THE FISH IS THE <span>GERMAN</span>.
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld3()">
+        ◀ BACK TO WORLD 3
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 3 TRIAL 2
+========================================== -->
+
+<section id="world3Trial2" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 3 • TRIAL 2
+        </div>
+
+        <h1 class="subsection-page-title">
+            TRIAL 2
+        </h1>
+
+    </div>
+
+
+    <div class="trial-table-wrapper">
+
+        <table class="trial-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="category">CATEGORY</th>
+
+                    <th class="house-cell">HOUSE 1</th>
+                    <th class="house-cell">HOUSE 2</th>
+                    <th class="house-cell">HOUSE 3</th>
+                    <th class="house-cell">HOUSE 4</th>
+                    <th class="house-cell">HOUSE 5</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+                    <td class="category">NATIONALITY</td>
+                    <td class="choice">Norwegian</td>
+                    <td class="choice">Dane</td>
+                    <td class="choice">Brit</td>
+                    <td class="choice">Swede</td>
+                    <td class="choice">German</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BEVERAGE</td>
+                    <td class="choice">Beer</td>
+                    <td class="choice">Tea</td>
+                    <td class="choice">Milk</td>
+                    <td class="choice">Coffee</td>
+                    <td class="choice">Water</td>
+                </tr>
+
+                <tr>
+                    <td class="category">HOUSE COLOR</td>
+                    <td class="choice">Yellow</td>
+                    <td class="choice">Blue</td>
+                    <td class="choice">Red</td>
+                    <td class="choice">Green</td>
+                    <td class="choice">White</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BRAND OF CIGAR</td>
+                    <td class="choice">Dunhill</td>
+                    <td class="choice">Pall Mall</td>
+                    <td class="choice">Blue Master</td>
+                    <td class="choice">Blend</td>
+                    <td class="choice">Prince</td>
+                </tr>
+
+                <tr>
+                    <td class="category">PET</td>
+                    <td class="choice">Fish</td>
+                    <td class="choice">Horse</td>
+                    <td class="choice">Birds</td>
+                    <td class="choice">Dog</td>
+                    <td class="choice">Cat</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="trial-answer">
+        THE OWNER OF THE FISH IS THE <span>NORWEGIAN</span>.
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld3()">
+        ◀ BACK TO WORLD 3
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 3 TRIAL 3
+========================================== -->
+
+<section id="world3Trial3" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 3 • TRIAL 3
+        </div>
+
+        <h1 class="subsection-page-title">
+            TRIAL 3
+        </h1>
+
+    </div>
+
+
+    <div class="trial-table-wrapper">
+
+        <table class="trial-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="category">CATEGORY</th>
+
+                    <th class="house-cell">HOUSE 1</th>
+                    <th class="house-cell">HOUSE 2</th>
+                    <th class="house-cell">HOUSE 3</th>
+                    <th class="house-cell">HOUSE 4</th>
+                    <th class="house-cell">HOUSE 5</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+                    <td class="category">NATIONALITY</td>
+                    <td class="choice">Norwegian</td>
+                    <td class="choice">Dane</td>
+                    <td class="choice">Brit</td>
+                    <td class="choice">German</td>
+                    <td class="choice">Swede</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BEVERAGE</td>
+                    <td class="choice">Water</td>
+                    <td class="choice">Tea</td>
+                    <td class="choice">Milk</td>
+                    <td class="choice">Coffee</td>
+                    <td class="choice">Beer</td>
+                </tr>
+
+                <tr>
+                    <td class="category">HOUSE COLOR</td>
+                    <td class="choice">Yellow</td>
+                    <td class="choice">Blue</td>
+                    <td class="choice">Red</td>
+                    <td class="choice">Green</td>
+                    <td class="choice">White</td>
+                </tr>
+
+                <tr>
+                    <td class="category">BRAND OF CIGAR</td>
+                    <td class="choice">Dunhill</td>
+                    <td class="choice">Blends</td>
+                    <td class="choice">Pall Mall</td>
+                    <td class="choice">Prince</td>
+                    <td class="choice">Blue Master</td>
+                </tr>
+
+                <tr>
+                    <td class="category">PET</td>
+                    <td class="choice">Cats</td>
+                    <td class="choice">Horses</td>
+                    <td class="choice">Birds</td>
+                    <td class="choice">Fish</td>
+                    <td class="choice">Dogs</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="trial-answer">
+        THE OWNER OF THE FISH IS THE <span>GERMAN</span>.
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld3()">
+        ◀ BACK TO WORLD 3
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     WORLD 3 DISCUSSION
+========================================== -->
+
+<section id="world3Discussion" class="subsection-page">
+
+    <div class="subsection-page-header">
+
+        <div class="subsection-page-number">
+            WORLD 3 • DISCUSSION
+        </div>
+
+        <h1 class="subsection-page-title">
+            DISCUSSION
+        </h1>
+
+    </div>
+
+
+    <div class="discussion-box">
+
+        <p>
+            For my final solution, I was able to solve the puzzle by carefully organizing all the clues and connecting them with one another. At first, the problem was difficult for me because there were many categories to consider, such as the nationality, beverage, house color, cigar brand, and pet. I had to make sure that each person, house, beverage, cigar, and pet was different. Instead of trying to solve everything at once, I worked through the clues step by step and used the information that was already given to eliminate the possibilities.
+        </p>
+
+        <p>
+            I started with the clues that gave direct information. The Norwegian lives in House 1, while the center house, House 3, is occupied by the person who drinks milk. The Norwegian also lives next to the blue house, which means House 2 is blue. Since the owner of the yellow house smokes Dunhill, and the man who keeps horses lives next to the person who smokes Dunhill, I was able to connect the house color, cigar, and pet clues. I also used the clue that the Brit lives in the red house and that the green house is immediately to the left of the white house. The owner of the green house drinks coffee, which helped me determine the positions of the green and white houses.
+        </p>
+
+        <p>
+            The clues involving the beverages and cigar brands were also important in completing the table. The Dane drinks tea, while the person who smokes BlueMaster drinks beer. The person who smokes Prince is the German, and the person who smokes Pall Mall keeps birds. I also considered the clues about the blends, cats, and water. The person who smokes blends lives next to the person who keeps cats and also has a neighbor who drinks water. By combining these clues instead of looking at them separately, I was able to eliminate the incorrect possibilities and fill in the remaining information.
+        </p>
+
+        <p>
+            One of the biggest challenges I encountered was that some clues could only be understood after another clue had already been solved. There were times when I was unsure about where to place a particular nationality, beverage, or pet because several possibilities seemed possible. This was also the reason why I made a Trial 2. I had to review my first attempt, check the clues again, and adjust the information until all the clues were consistent with each other.
+        </p>
+
+        <p>
+            I was able to solve the problem with the help of my boardmates and my roommate. They helped me understand some of the clues and the way the information could be connected. They also tried solving the puzzle themselves, so we were able to compare our answers and reasoning. Their help made the process less confusing, especially when I got stuck on some of the clues.
+        </p>
+
+        <p>
+            After checking the clues and completing my final table, I found that the <strong>German owns the fish</strong>. What I learned from solving this problem is that logical reasoning is not always about immediately knowing the answer. It is about carefully examining the information, eliminating possibilities, and making sure that every conclusion is supported by the clues. The puzzle was challenging at first, but solving it step by step helped me understand how organized reasoning can be used to solve a complicated problem.
+        </p>
+
+    </div>
+
+
+    <button class="back-button" onclick="backToWorld3()">
+        ◀ BACK TO WORLD 3
+    </button>
+
+</section>
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================== -->
+
+<script>
+
+    function hideAllScreens() {
+
+        const screens = document.querySelectorAll(
+            '.screen, .coming-soon, .subsection-page, .topic-page'
+        );
+
+        screens.forEach(function(screen) {
+            screen.classList.remove('active');
+        });
+
+    }
+
+
+    function startPortfolio() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('worldScreen')
+            .classList.add('active');
+
+    }
+
+
+    function openSection(sectionID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(sectionID)
+            .classList.add('active');
+
+    }
+
+
+    function openSubsection(subsectionID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(subsectionID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld1() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('complexity')
+            .classList.add('active');
+
+    }
+
+
+    function goToWorlds() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('worldScreen')
+            .classList.add('active');
+
+    }
+
+
+    function goToTitle() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('startScreen')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 2 FUNCTIONS
+    ========================= */
+
+    function openWorld2Level(levelID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(levelID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld2() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('perfectImperfections')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 2 LEVEL 1
+    ========================= */
+
+    function openTopic(topicID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(topicID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld2Level1() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('world2Level1')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 2 LEVEL 2
+    ========================= */
+
+    function openLevel2Topic(topicID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(topicID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld2Level2() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('world2Level2')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 2 LEVEL 3
+    ========================= */
+
+    function openLevel3Topic(topicID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(topicID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld2Level3() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('world2Level3')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 2 LEVEL 4
+    ========================= */
+
+    function openLevel4Topic(topicID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(topicID)
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld2Level4() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('world2Level4')
+            .classList.add('active');
+
+    }
+
+
+    /* =========================
+       WORLD 3 FUNCTIONS
+    ========================= */
+
+    function openWorld3Trial(trialID) {
+
+        hideAllScreens();
+
+        document
+            .getElementById(trialID)
+            .classList.add('active');
+
+    }
+
+
+    function openWorld3Discussion() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('world3Discussion')
+            .classList.add('active');
+
+    }
+
+
+    function backToWorld3() {
+
+        hideAllScreens();
+
+        document
+            .getElementById('chaotic')
+            .classList.add('active');
+
+    }
+
+</script>
+
+</body>
+</html>
